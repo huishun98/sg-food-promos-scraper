@@ -62,6 +62,7 @@ client.connect()  # Connect to the server
 client.get_me()  # Issue a high level command to start receiving message
 
 posts = []
+exit_code = 0
 
 # Get the current datetime in UTC
 for i, channel_username in enumerate(overview_df["channel"]):
@@ -73,6 +74,7 @@ for i, channel_username in enumerate(overview_df["channel"]):
         prev_msg_id = int(prev_msg_id)
     except Exception:
         print(f"[INFO] {channel_username} does not have a valid prev_msg_id")
+        exit_code = 1
         continue
 
     channel_entity = client.get_entity(channel_username)
@@ -106,7 +108,7 @@ for i, channel_username in enumerate(overview_df["channel"]):
 
 if len(posts) <= 0:
     print("[INFO] no new posts")
-    exit()
+    exit(exit_code)
 
 print("[INFO] updating google sheets...")
 data_sheet.update_row(1, columns)
@@ -124,5 +126,7 @@ headers = {
 url = "https://api.data.world/v0/datasets/huishun98/sg-food-promos/sync"
 response = requests.post(url, headers=headers)
 print(f"[INFO] status={response.status_code}, response={response.json()['message']}")
+if response.status_code != 200:
+    exit_code = 1
 
-print("[INFO] success")
+exit(exit_code)

@@ -23,6 +23,7 @@ overview_df = overview_sheet.get_as_df()
 columns = [
     "date",
     "channel_username",
+    "scraped_at",
     "id",
     "message",
     "_",
@@ -99,6 +100,7 @@ for i, channel_username in enumerate(overview_df["channel"]):
     for msg in msgs:
         post = msg.to_dict()
         post["channel_username"] = channel_username
+        post["scraped_at"] = datetime.now(pytz.utc)
         posts.append(post)
 
     overview_df.loc[i, "latest_msg_id"] = msgs[0].id
@@ -115,9 +117,10 @@ data_sheet.update_row(1, columns)
 df = pd.DataFrame(posts)
 df = df.applymap(str)
 df = df.reindex(columns=columns)
-data_sheet.insert_rows(row=1, values=df.values.tolist())
+vals = df.values.tolist()
+data_sheet.append_table(vals, start="A1", end=None, dimension="ROWS", overwrite=False)
 overview_sheet.set_dataframe(overview_df, start="A1")
-
+data_sheet.sort_range("A2", "AZ40000", sortorder="DESCENDING") # 40000 is max no. of rows in google sheets
 print("[INFO] updating data.world...")
 headers = {
     "Authorization": f"Bearer {config.DATA_WORLD_API_TOKEN}",

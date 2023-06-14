@@ -1,12 +1,13 @@
 import pytz
 import config
+import requests
 import pygsheets
 import pandas as pd
-from google.oauth2 import service_account
+
 from datetime import datetime
 from telethon import sessions
 from telethon.sync import TelegramClient
-
+from google.oauth2 import service_account
 from telethon.tl.functions.messages import GetHistoryRequest
 
 
@@ -99,7 +100,9 @@ for i, channel_username in enumerate(overview_df["channel"]):
         posts.append(post)
 
     overview_df.loc[i, "latest_msg_id"] = msgs[0].id
-    print(f"[INFO] prev msg id={prev_msg_id}, new msg id={msgs[0].id}, channel={channel_username}")
+    print(
+        f"[INFO] prev msg id={prev_msg_id}, new msg id={msgs[0].id}, channel={channel_username}"
+    )
 
 if len(posts) <= 0:
     print("[INFO] no new posts")
@@ -112,4 +115,14 @@ df = df.applymap(str)
 df = df.reindex(columns=columns)
 data_sheet.insert_rows(row=1, values=df.values.tolist())
 overview_sheet.set_dataframe(overview_df, start="A1")
+
+print("[INFO] updating data.world...")
+headers = {
+    "Authorization": f"Bearer {config.DATA_WORLD_API_TOKEN}",
+    "Content-type": "application/x-www-form-urlencoded",
+}
+url = "https://api.data.world/v0/datasets/huishun98/sg-food-promos/sync"
+response = requests.post(url, headers=headers)
+print(f"[INFO] status={response.status_code}, response={response.json()['message']}")
+
 print("[INFO] success")

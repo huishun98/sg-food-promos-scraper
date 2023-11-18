@@ -85,7 +85,7 @@ for i, channel_username in enumerate(overview_df["channel"]):
         offset_date=datetime.now(pytz.utc),
         offset_id=0,
         max_id=0,
-        min_id=prev_msg_id + 1,
+        min_id=prev_msg_id,
         add_offset=0,
         hash=0,
     )

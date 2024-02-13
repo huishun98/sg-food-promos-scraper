@@ -147,4 +147,4 @@ if __name__ == "__main__":
     print("[INFO] updating data.world...")
     status_code = update_data_world()
 
-    exit(status_code)
+    exit(status_code != 200)

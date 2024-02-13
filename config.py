@@ -25,19 +25,6 @@ SCOPES = [
 GSHEET_ID = getenv("GSHEET_ID")  # can be found in the gsheet's url
 OVERVIEW_SHEETNAME = "Sheet1"  # defaults to Sheet1.
 DATA_SHEETNAME = "Sheet2"  # defaults to Sheet2.
-
-# To use Google Sheets API,
-# create a google cloud project: https://developers.google.com/workspace/guides/create-project
-# create service account credentials: https://developers.google.com/workspace/guides/create-credentials#service-account
-SERVICE_ACCOUNT_INFO_B64 = getenv("SERVICE_ACCOUNT_INFO_B64")
-SERVICE_ACCOUNT_INFO = base64.b64decode(SERVICE_ACCOUNT_INFO_B64).decode("utf-8")
-SERVICE_ACCOUNT_INFO = json.loads(SERVICE_ACCOUNT_INFO)
-
-"""data.world config"""
-DATA_WORLD_API_TOKEN = getenv("DATA_WORLD_API_TOKEN")
-
-
-"""Script config"""
 COLS = [
     "date",
     "channel_username",
@@ -68,8 +55,18 @@ COLS = [
     "replies",
     "edit_date",
     # "post_author",
-    "grouped_id",
+    # "grouped_id",
     "reactions",
     # "restriction_reason",
     # "ttl_period",
 ]
+
+# To use Google Sheets API,
+# create a google cloud project: https://developers.google.com/workspace/guides/create-project
+# create service account credentials: https://developers.google.com/workspace/guides/create-credentials#service-account
+SERVICE_ACCOUNT_INFO_B64 = getenv("SERVICE_ACCOUNT_INFO_B64")
+SERVICE_ACCOUNT_INFO = base64.b64decode(SERVICE_ACCOUNT_INFO_B64).decode("utf-8")
+SERVICE_ACCOUNT_INFO = json.loads(SERVICE_ACCOUNT_INFO)
+
+"""data.world config"""
+DATA_WORLD_API_TOKEN = getenv("DATA_WORLD_API_TOKEN")

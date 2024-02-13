@@ -29,4 +29,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run unit tests
+        env:
+          API_ID: ${{ secrets.API_ID }}
+          API_HASH:  ${{ secrets.API_HASH }}
+          TELETHON_SESSION:  ${{ secrets.TELETHON_SESSION }}
+          GSHEET_ID:  ${{ secrets.GSHEET_ID }}
+          SERVICE_ACCOUNT_INFO_B64:  ${{ secrets.SERVICE_ACCOUNT_INFO_B64 }}
+          DATA_WORLD_API_TOKEN:  ${{ secrets.DATA_WORLD_API_TOKEN }}
         run: python -m pytest tests/

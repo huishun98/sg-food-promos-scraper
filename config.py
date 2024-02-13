@@ -35,3 +35,41 @@ SERVICE_ACCOUNT_INFO = json.loads(SERVICE_ACCOUNT_INFO)
 
 """data.world config"""
 DATA_WORLD_API_TOKEN = getenv("DATA_WORLD_API_TOKEN")
+
+
+"""Script config"""
+COLS = [
+    "date",
+    "channel_username",
+    "scraped_at",
+    "id",
+    "message",
+    "_",
+    "peer_id",
+    # "out",
+    # "mentioned",
+    # "media_unread",
+    "silent",
+    # "post",
+    # "from_scheduled",
+    # "legacy",
+    "edit_hide",
+    "pinned",
+    # "noforwards",
+    # "from_id",
+    "fwd_from",
+    # "via_bot_id",
+    "reply_to",
+    "media",
+    # "reply_markup",
+    "entities",
+    "views",
+    "forwards",
+    "replies",
+    "edit_date",
+    # "post_author",
+    "grouped_id",
+    "reactions",
+    # "restriction_reason",
+    # "ttl_period",
+]
